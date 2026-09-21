@@ -1,180 +1,124 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" width="100%" height="auto">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1260 630" width="100%">
   <defs>
     <style>
-      .txt-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 22px; font-weight: 800; fill: #0f172a; }
-      .txt-subtitle { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 14px; font-weight: 500; fill: #64748b; }
-      .txt-node-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 16px; font-weight: 700; fill: #1e293b; }
-      .txt-body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 12.5px; font-weight: 500; fill: #334155; }
-      .txt-code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; font-weight: 600; fill: #0284c7; }
-      .txt-badge { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; font-weight: 700; fill: #ffffff; }
+      .txt-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 22px; font-weight: 800; fill: #000000; }
+      .txt-node-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 700; fill: #000000; }
+      .txt-node-sub { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 500; fill: #000000; }
+      .txt-node-code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 13px; font-weight: 700; fill: #000000; }
+      .txt-arrow-label { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 700; fill: #000000; }
+      .txt-badge { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 700; fill: #000000; }
 
       @keyframes flow-dash {
-        from { stroke-dashoffset: 32; }
-        to { stroke-dashoffset: 0; }
+        from { stroke-dashoffset: 0; }
+        to { stroke-dashoffset: -32; }
       }
-      .traffic-flow {
-        stroke: #0284c7;
-        stroke-width: 2.5;
-        stroke-dasharray: 8 5;
-        animation: flow-dash 1.2s linear infinite;
-      }
-      .metric-flow {
-        stroke: #f59e0b;
-        stroke-width: 2;
-        stroke-dasharray: 6 4;
-        animation: flow-dash 1.6s linear infinite;
-      }
-      .scale-flow {
-        stroke: #10b981;
-        stroke-width: 2.5;
-        stroke-dasharray: 8 5;
+      .anim-flow {
+        stroke-dasharray: 10 6;
         animation: flow-dash 1.2s linear infinite;
       }
     </style>
 
-    <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#0284c7"/>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#000000"/>
     </marker>
-    <marker id="arrow-amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#f59e0b"/>
-    </marker>
-    <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#10b981"/>
-    </marker>
-
-    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%" filterUnits="userSpaceOnUse">
-      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0f172a" flood-opacity="0.08"/>
-    </filter>
   </defs>
 
-  <!-- Background -->
-  <rect width="1200" height="620" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+  <!-- Canvas Border -->
+  <rect x="10" y="10" width="1240" height="610" rx="16" fill="#ffffff" stroke="#000000" stroke-width="2"/>
 
-  <!-- Header -->
-  <text x="50" y="45" class="txt-title">Lab 58: Auto Scaling Architecture for SSE Server Fleets</text>
-  <text x="50" y="68" class="txt-subtitle">Target Tracking Scaling with Custom Connection Telemetry, Launch Templates, and ALB Target Groups</text>
+  <!-- ==================== TOP: 3 MAIN TIERS ==================== -->
+  <!-- 1. Launch Template -->
+  <g transform="translate(60, 75)">
+    <rect width="250" height="270" rx="14" fill="#eaf8ff" stroke="#000000" stroke-width="2"/>
+    <text x="125" y="38" class="txt-node-title" text-anchor="middle">Launch Template</text>
+    <text x="125" y="62" class="txt-node-sub" text-anchor="middle">Instance Blueprint</text>
 
-  <!-- 1. Traffic Ingress -->
-  <g transform="translate(40, 95)">
-    <rect width="210" height="200" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" filter="url(#shadow)"/>
-    <rect width="210" height="38" rx="12" fill="#f1f5f9"/>
-    <rect y="26" width="210" height="12" fill="#f1f5f9"/>
-    <text x="16" y="25" class="txt-node-title" font-size="14">Traffic Ingress</text>
+    <!-- Details -->
+    <rect x="20" y="85" width="210" height="160" rx="10" fill="#ffffff" stroke="#000000" stroke-width="1.5"/>
+    <rect x="35" y="100" width="180" height="26" rx="6" fill="#f1f5f9"/>
+    <text x="125" y="118" class="txt-node-code" font-size="12" text-anchor="middle">lt-sse-server</text>
+    <text x="35" y="152" class="txt-node-sub">&#8226; AMI: Ubuntu 22.04 LTS</text>
+    <text x="35" y="178" class="txt-node-sub">&#8226; Type: t3.micro</text>
+    <text x="35" y="204" class="txt-node-sub">&#8226; UserData: Auto-starts</text>
+    <text x="45" y="226" class="txt-node-code" font-size="11">FastAPI + Uvicorn</text>
+  </g>
 
-    <g transform="translate(14, 52)">
-      <rect width="182" height="132" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
-      <text x="14" y="24" class="txt-node-title" font-size="13">1,000+ Concurrent</text>
-      <text x="14" y="42" class="txt-code">Persistent Clients</text>
-      <line x1="12" y1="52" x2="170" y2="52" stroke="#e2e8f0" stroke-width="1"/>
-      <text x="14" y="72" class="txt-body">• Sustained open sockets</text>
-      <text x="14" y="92" class="txt-body">• Minimal CPU consumption</text>
-      <text x="14" y="112" class="txt-body">• RAM &amp; fd sensitive</text>
+  <!-- Arrow Template -> ASG -->
+  <path d="M 310 180 L 460 180" fill="none" stroke="#cbd5e1" stroke-width="2"/>
+  <path d="M 310 180 L 460 180" fill="none" stroke="#000000" stroke-width="2" class="anim-flow" marker-end="url(#arrow)"/>
+  <text x="385" y="170" class="txt-arrow-label" text-anchor="middle">Provisions</text>
+
+  <!-- 2. Auto Scaling Group Fleet -->
+  <g transform="translate(460, 75)">
+    <rect width="400" height="270" rx="14" fill="#ebeaff" stroke="#000000" stroke-width="2"/>
+    <text x="200" y="38" class="txt-node-title" text-anchor="middle">Auto Scaling Group: sse-asg</text>
+    <text x="200" y="62" class="txt-node-sub" text-anchor="middle">Dynamic Fleet (Min: 1 | Desired: 2 | Max: 5)</text>
+
+    <!-- Node 1 -->
+    <rect x="25" y="85" width="165" height="160" rx="10" fill="#ffffff" stroke="#000000" stroke-width="1.5"/>
+    <rect x="35" y="100" width="145" height="24" rx="6" fill="#dcfce7"/>
+    <text x="107" y="117" class="txt-badge" font-size="12" text-anchor="middle">EC2 Instance 1</text>
+    <text x="107" y="150" class="txt-node-title" font-size="15" text-anchor="middle">FastAPI Server</text>
+    <text x="35" y="180" class="txt-node-sub">&#8226; Port: 8000</text>
+    <text x="35" y="206" class="txt-node-sub">&#8226; Active Sockets:</text>
+    <text x="45" y="228" class="txt-node-code" font-size="12">850 Streams</text>
+
+    <!-- Node 2 -->
+    <rect x="210" y="85" width="165" height="160" rx="10" fill="#ffffff" stroke="#000000" stroke-width="1.5"/>
+    <rect x="220" y="100" width="145" height="24" rx="6" fill="#dcfce7"/>
+    <text x="292" y="117" class="txt-badge" font-size="12" text-anchor="middle">EC2 Instance 2</text>
+    <text x="292" y="150" class="txt-node-title" font-size="15" text-anchor="middle">FastAPI Server</text>
+    <text x="220" y="180" class="txt-node-sub">&#8226; Port: 8000</text>
+    <text x="220" y="206" class="txt-node-sub">&#8226; Active Sockets:</text>
+    <text x="230" y="228" class="txt-node-code" font-size="12">920 Streams</text>
+  </g>
+
+  <!-- Arrow ASG <-> ALB -->
+  <path d="M 1010 180 L 860 180" fill="none" stroke="#cbd5e1" stroke-width="2"/>
+  <path d="M 1010 180 L 860 180" fill="none" stroke="#000000" stroke-width="2" class="anim-flow" marker-end="url(#arrow)"/>
+  <text x="935" y="170" class="txt-arrow-label" text-anchor="middle">Balances</text>
+
+  <!-- 3. AWS ALB -->
+  <g transform="translate(1010, 75)">
+    <rect width="190" height="270" rx="14" fill="#effff1" stroke="#000000" stroke-width="2"/>
+    <text x="95" y="38" class="txt-node-title" text-anchor="middle">AWS ALB</text>
+    <text x="95" y="62" class="txt-node-sub" text-anchor="middle">Traffic Ingress</text>
+
+    <rect x="15" y="85" width="160" height="160" rx="10" fill="#ffffff" stroke="#000000" stroke-width="1.5"/>
+    <text x="95" y="115" class="txt-node-title" font-size="14" text-anchor="middle">Listener: Port 80</text>
+    <text x="25" y="145" class="txt-node-sub">&#8226; Idle: 3600s</text>
+    <text x="25" y="172" class="txt-node-sub">&#8226; Tracks conns</text>
+    <rect x="25" y="195" width="140" height="26" rx="6" fill="#effff1" stroke="#16a34a" stroke-width="1"/>
+    <text x="95" y="213" class="txt-node-code" font-size="11" text-anchor="middle">TargetConnCount</text>
+  </g>
+
+  <!-- ==================== BOTTOM: CLOUDWATCH SCALING POLICY ==================== -->
+  <g transform="translate(60, 370)">
+    <rect width="1140" height="160" rx="14" fill="#fffbe8" stroke="#000000" stroke-width="2"/>
+    <text x="570" y="36" class="txt-node-title" text-anchor="middle">CloudWatch Target Tracking Scaling Policy</text>
+
+    <!-- Policy 1 -->
+    <g transform="translate(40, 55)">
+      <rect width="500" height="85" rx="8" fill="#ffffff" stroke="#000000" stroke-width="1.5"/>
+      <rect x="15" y="15" width="190" height="26" rx="6" fill="#fef3c7" stroke="#d97706" stroke-width="1"/>
+      <text x="110" y="32" class="txt-node-code" font-size="12" text-anchor="middle">TargetConnectionCount</text>
+      <text x="220" y="33" class="txt-node-title" font-size="15">= 1,000 conns/target</text>
+      <text x="20" y="65" class="txt-node-sub" font-size="12.5">Triggers scale-out when active socket count per server reaches 1,000</text>
+    </g>
+
+    <!-- Policy 2 -->
+    <g transform="translate(600, 55)">
+      <rect width="500" height="85" rx="8" fill="#ffffff" stroke="#000000" stroke-width="1.5"/>
+      <rect x="15" y="15" width="190" height="26" rx="6" fill="#fee2e2" stroke="#ef4444" stroke-width="1"/>
+      <text x="110" y="32" class="txt-node-code" font-size="12" text-anchor="middle">TargetResponseTime</text>
+      <text x="220" y="33" class="txt-node-title" font-size="15">&gt; 250ms Safeguard</text>
+      <text x="20" y="65" class="txt-node-sub" font-size="12.5">Triggers emergency scale-out if event loop experiences high latency</text>
     </g>
   </g>
 
-  <!-- 2. Application Load Balancer -->
-  <g transform="translate(290, 95)">
-    <rect width="260" height="200" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" filter="url(#shadow)"/>
-    <rect width="260" height="38" rx="12" fill="#0284c7"/>
-    <rect y="26" width="260" height="12" fill="#0284c7"/>
-    <text x="16" y="25" class="txt-node-title" fill="#ffffff" font-size="14">AWS ALB (Port 80/443)</text>
-
-    <g transform="translate(14, 52)">
-      <rect width="232" height="132" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
-      <text x="12" y="24" class="txt-code">idle_timeout = 3600s</text>
-      <text x="12" y="44" class="txt-code">dereg_delay = 300s</text>
-      <line x1="12" y1="54" x2="220" y2="54" stroke="#e2e8f0" stroke-width="1"/>
-      <text x="12" y="74" class="txt-body">• Tracks TargetConnectionCount</text>
-      <text x="12" y="94" class="txt-body">• Probes /health (HTTP 200)</text>
-      <text x="12" y="114" class="txt-body">• Round-robin target routing</text>
-    </g>
+  <!-- Bottom Summary Pill -->
+  <g transform="translate(200, 550)">
+    <rect width="860" height="50" rx="25" fill="#d4f6d9" stroke="#000000" stroke-width="2"/>
+    <text x="430" y="31" class="txt-badge" font-size="15" text-anchor="middle">Key Rule: SSE applications scale based on Active Socket Count, NOT CPU utilization!</text>
   </g>
-
-  <!-- 3. Auto Scaling Group Fleet -->
-  <g transform="translate(600, 95)">
-    <rect width="560" height="270" rx="14" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" filter="url(#shadow)"/>
-    <rect width="560" height="38" rx="14" fill="#0f172a"/>
-    <rect y="26" width="560" height="12" fill="#0f172a"/>
-    <text x="18" y="25" class="txt-node-title" fill="#ffffff" font-size="14">Auto Scaling Group: sse-asg (Min: 2, Max: 8, Desired: 2)</text>
-
-    <!-- Instance 1 -->
-    <g transform="translate(18, 52)">
-      <rect width="250" height="195" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
-      <text x="14" y="24" class="txt-node-title" font-size="13">EC2 Instance A</text>
-      <rect x="175" y="10" width="60" height="18" rx="9" fill="#10b981"/>
-      <text x="205" y="23" class="txt-badge" text-anchor="middle">Active</text>
-
-      <line x1="12" y1="36" x2="238" y2="36" stroke="#e2e8f0" stroke-width="1"/>
-      <text x="14" y="56" class="txt-code">• ulimit -n 65535</text>
-      <text x="14" y="76" class="txt-code">• FastAPI + 4 Workers</text>
-      <text x="14" y="96" class="txt-body">• Active Streams: <tspan font-weight="700">1,250</tspan></text>
-      <text x="14" y="116" class="txt-body">• CPU Usage: <tspan font-weight="700">14.2%</tspan></text>
-      
-      <rect x="12" y="132" width="226" height="50" rx="6" fill="#fef3c7" stroke="#fcd34d"/>
-      <text x="20" y="152" class="txt-code" fill="#92400e">PutMetricData &rarr; CW</text>
-      <text x="20" y="168" class="txt-body" font-size="11" fill="#78350f">ActiveSSEConnections: 1250</text>
-    </g>
-
-    <!-- Instance 2 -->
-    <g transform="translate(288, 52)">
-      <rect width="250" height="195" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
-      <text x="14" y="24" class="txt-node-title" font-size="13">EC2 Instance B</text>
-      <rect x="175" y="10" width="60" height="18" rx="9" fill="#10b981"/>
-      <text x="205" y="23" class="txt-badge" text-anchor="middle">Active</text>
-
-      <line x1="12" y1="36" x2="238" y2="36" stroke="#e2e8f0" stroke-width="1"/>
-      <text x="14" y="56" class="txt-code">• ulimit -n 65535</text>
-      <text x="14" y="76" class="txt-code">• FastAPI + 4 Workers</text>
-      <text x="14" y="96" class="txt-body">• Active Streams: <tspan font-weight="700">1,180</tspan></text>
-      <text x="14" y="116" class="txt-body">• CPU Usage: <tspan font-weight="700">13.8%</tspan></text>
-
-      <rect x="12" y="132" width="226" height="50" rx="6" fill="#fef3c7" stroke="#fcd34d"/>
-      <text x="20" y="152" class="txt-code" fill="#92400e">PutMetricData &rarr; CW</text>
-      <text x="20" y="168" class="txt-body" font-size="11" fill="#78350f">ActiveSSEConnections: 1180</text>
-    </g>
-  </g>
-
-  <!-- 4. Telemetry & Scaling Policy Tier -->
-  <g transform="translate(40, 395)">
-    <rect width="1120" height="190" rx="14" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" filter="url(#shadow)"/>
-    <rect width="1120" height="38" rx="14" fill="#f59e0b"/>
-    <rect y="26" width="1120" height="12" fill="#f59e0b"/>
-    <text x="20" y="25" class="txt-node-title" fill="#ffffff" font-size="14">Amazon CloudWatch Telemetry &amp; Dynamic Scaling Decision Engine</text>
-
-    <!-- Sub-block A: CloudWatch Metrics -->
-    <g transform="translate(24, 52)">
-      <rect width="320" height="115" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
-      <text x="16" y="24" class="txt-node-title" font-size="13">Aggregated Metrics</text>
-      <line x1="16" y1="34" x2="304" y2="34" stroke="#e2e8f0" stroke-width="1"/>
-      <text x="16" y="55" class="txt-code">Namespace: SSE/ApplicationFleet</text>
-      <text x="16" y="75" class="txt-body">• <tspan class="txt-code">ActiveSSEConnections</tspan> = 2,430 total</text>
-      <text x="16" y="95" class="txt-body">• Avg Conn Per Target: <tspan font-weight="700" fill="#dc2626">1,215</tspan> (&gt; 1,000 threshold)</text>
-    </g>
-
-    <!-- Sub-block B: Target Tracking Policy -->
-    <g transform="translate(370, 52)">
-      <rect width="360" height="115" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
-      <text x="16" y="24" class="txt-node-title" font-size="13">Target Tracking Policy</text>
-      <line x1="16" y1="34" x2="344" y2="34" stroke="#e2e8f0" stroke-width="1"/>
-      <text x="16" y="55" class="txt-code">TargetValue: 1000.0 conn/instance</text>
-      <text x="16" y="75" class="txt-body">• ScaleOutCooldown: 60s (Fast scale out)</text>
-      <text x="16" y="95" class="txt-body">• ScaleInCooldown: 300s (Gradual scale in)</text>
-    </g>
-
-    <!-- Sub-block C: Scaling Action Trigger -->
-    <g transform="translate(755, 52)">
-      <rect width="340" height="115" rx="8" fill="#ecfdf5" stroke="#a7f3d0"/>
-      <text x="16" y="24" class="txt-node-title" font-size="13" fill="#065f46">Automated Scaling Action</text>
-      <line x1="16" y1="34" x2="324" y2="34" stroke="#a7f3d0" stroke-width="1"/>
-      <text x="16" y="55" class="txt-code" fill="#047857">TRIGGER: Scale Out +1 Instance</text>
-      <text x="16" y="75" class="txt-body" fill="#065f46">• Launches Instance C from Launch Template</text>
-      <text x="16" y="95" class="txt-body" fill="#065f46">• Registers with Target Group within 60s</text>
-    </g>
-  </g>
-
-  <!-- Connectors -->
-  <path d="M 250 195 L 290 195" class="traffic-flow" marker-end="url(#arrow-blue)"/>
-  <path d="M 550 195 L 600 195" class="traffic-flow" marker-end="url(#arrow-blue)"/>
-  <path d="M 725 365 L 725 395" class="metric-flow" marker-end="url(#arrow-amber)"/>
-  <path d="M 925 395 L 925 365" class="scale-flow" marker-end="url(#arrow-green)"/>
 </svg>
